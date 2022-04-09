@@ -7,13 +7,12 @@ import './Home.css';
 
 
 
-
-
 export default function Home() {
 
+    const [show, setShow] = useState(false);
+    const [text, setText] = useState("hey");
     const [Inventory, setItems] = useState([]);
     const itemRef = collection(db, "Inventory");
-
 
     useEffect(() => {
         const getItems = async () => {
@@ -24,22 +23,44 @@ export default function Home() {
         getItems()
     }, []);
 
+    function ProductView(item) {
+        setShow(true)
+        setText(
+            <div>
+                <button className = "btnclose" onClick={()=> setShow(false) }>X</button>
+                <img src={item.Image} />
+                <h3>{item.Name}</h3>
+                <p>{item.Description}</p>
+                <p>{item.Price}</p>
+                <div>
+                    <input type="number" className="edtnum" placeholder="1" min='0' max={item.Quantity} />
+                    <button className="btnadd">Add to cart</button>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div>
             <Navbar />
-            <div className="bodydiv" >
-                {Inventory.map((item) => {
-                    return <div className="itemdiv" >
-                        <Link to={{ pathname : 'home/product',state : 'Hello'}}>
-                            <img src={item.Image} alt="nope" />
-                        </Link>
-                        <div className="textdiv">
-                            <h1 className="itemname">{item.Name}</h1>
-                        </div>
-                        <h1 className="itemprice">R{item.Price}</h1>
+            {
+                show ? <div className="reviewdiv">
+                    {text}
+                </div> : null
+            }
+                <div className="bodydiv" >
+                    {Inventory.map((item) => {
+                      return <div className="itemdiv" onClick={() => {
+                        ProductView(item)
+                    }}>
+                    <img src={item.Image} alt="nope" />
+                    <div className="textdiv">                                
+                    <h1 className="itemname">{item.Name}</h1>
+                     </div>
+                    <h1 className="itemprice">R{item.Price}</h1>
                     </div>
                 })}
-            </div>
+             </div> 
         </div>
     );
 
@@ -64,7 +85,7 @@ function Navbar(){
                         <p>Cart</p>
                     </Link>
                 </div>
-                <button onClick={() => setShowLinks(!showLinks)}>
+                <button onClick={() => setShowLinks(!showLinks)} className="btnthings">
                     ≡
                 </button>
             </div>

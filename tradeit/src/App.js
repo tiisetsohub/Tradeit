@@ -24,6 +24,7 @@ function App() {
           <Signup />
         </Route>
 
+
       </Switch>
     </Router>
   );

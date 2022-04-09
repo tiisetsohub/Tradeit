@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap');
 
 .navbar{
     background-color: #113E21;
@@ -13,13 +14,58 @@ button:hover{
 
 .bodydiv{
     display: flex;
+    flex-wrap: wrap;
     background-color: white;
+    justify-content:space-evenly;
+
+}
+
+.reviewdiv{
+    align-items:center;
+    text-align:center;
+}
+.reviewdiv div img{
+    width:400px;
+    height:400px;
+    margin-top: 10px;
+}
+
+.reviewdiv div div {
+    margin-bottom: 30px;
+}
+
+.btnclose{
+    border-radius: 5px;
+    color:white;
+    background-color: #B38B59;
+    border:0px solid;
+    left:2px;
+    position:absolute;
+    margin-top: 10px;
+}
+
+.btnadd{
+    height: 28px;
+    font-weight: bold;
+    background-color: #B38B59;
+    border-radius: 3px;
+    border:0px solid;
+    color: white;
+}
+
+.edtnum{
+    width: 40px;
+    height: 26px;
+    background-color:#F0F0F0;
+    border-radius: 3px;
+    color: black;
+    border:1px solid #113E21;
 }
 
 
 .itemdiv{
     background-color: #F0F0F0;
-    width: 300px;
+    width: 250px;
     align-items: center;
     padding:15px;
     margin:10px;
@@ -34,24 +80,33 @@ button:hover{
 
 .itemname{
     font-weight:bold;
-    font-size:26px;
+    font-size:20px;
 }
+
 .itemprice{
-    font-weight:light;
-    font-size: 20px;
+    font-weight:lighter;
+    font-size: 14px;
 }
 
 .textdiv{
     height: 70px;
 }
 img{
-    width: 300px;
-    height:300px;
+    width: 250px;
+    height:250px;
     background-color: white;
     object-fit: contain;
     border-radius: 5px;
 }
 .btnsearch{
+    height: 28px;
+    border-radius: 3px;
+    background-color: #B38B59;
+    border: 0px solid;
+    color: white;
+}
+
+.btnthings{
     height: 28px;
     border-radius: 3px;
     background-color: #B38B59;
