@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './Home.css';
 
 
-
 export default function Home() {
 
     const [show, setShow] = useState(false);
@@ -24,6 +23,12 @@ export default function Home() {
     }, []);
 
     function ProductView(item) {
+        const scrollUp = ()=>{
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            })
+        }        
         setShow(true)
         setText(
             <div>
