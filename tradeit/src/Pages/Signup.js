@@ -1,19 +1,18 @@
-import React from 'react';
-import { loginmethod } from '../firebase-config';
+import React from 'react'
+import { signupmethod } from '../firebase-config'
 import { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './Login.css';
-import Signup from './Signup'
 
-export default function Login() {
+export default function Signup() {
   const [loading, setLoading] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
-
-  async function handleLogin() {
+  
+  async function handleSignup(){
     setLoading(true);
     try {
-      await loginmethod(emailRef.current.value, passwordRef.current.value);
+      await signupmethod(emailRef.current.value, passwordRef.current.value);
     } catch {
       alert('Error!')
     }
@@ -23,15 +22,11 @@ export default function Login() {
     <div>
       <Navbar />
       <div className='logindiv'>
-        <input className="edtemail" id ="input" ref = {emailRef}/>
+        <input ref ={emailRef} className="edtemail" id="input" />
         <br />
-        <input type="password" className="edtpassword" id="input" ref={passwordRef}/>
-        <div className="btnsdiv">
-          <Link to="/signup">
-            <button disabled={loading} className="btnsignup" id="btn">Sign Up</button>
-          </Link>
-          <button disabled={loading} className="btnlogin" id ="btn" onClick={handleLogin}>Login</button>
-        </div>
+        <input ref={passwordRef} type="password" className="edtpassword" id="input" />
+        <br />
+        <button disabled={loading} className="btnlogin" id="btn" onClick={handleSignup}>Sign up</button>
       </div>
     </div>
   )
@@ -60,5 +55,4 @@ function Navbar() {
     </div>
   )
 }
-
 

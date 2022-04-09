@@ -4,7 +4,7 @@ import { db } from '../firebase-config';
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './Home.css';
-import Login from './Login';
+
 
 
 
@@ -27,10 +27,12 @@ export default function Home() {
     return (
         <div>
             <Navbar />
-            <div className="bodydiv">
+            <div className="bodydiv" >
                 {Inventory.map((item) => {
-                    return <div className="itemdiv">
-                        <img src={item.Image} alt="nope" />
+                    return <div className="itemdiv" >
+                        <Link to={{ pathname : 'home/product',state : 'Hello'}}>
+                            <img src={item.Image} alt="nope" />
+                        </Link>
                         <div className="textdiv">
                             <h1 className="itemname">{item.Name}</h1>
                         </div>
@@ -53,13 +55,13 @@ function Navbar(){
                         <p>Login/Signup</p>
                     </Link>
                     <Link className="navlink" to='/login'>
-                        <p>Home</p>
-                    </Link>
-                    <Link className="navlink" to='/login'>
                         <p>About</p>
                     </Link>
                     <Link className="navlink" to='/login'>
                         <p>Contact</p>
+                    </Link>
+                    <Link className="navlink" to='/login'>
+                        <p>Cart</p>
                     </Link>
                 </div>
                 <button onClick={() => setShowLinks(!showLinks)}>

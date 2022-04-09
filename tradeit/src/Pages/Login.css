@@ -1,0 +1,39 @@
+.logindiv{
+    margin: 10px;
+    text-align: center;
+    padding-top: 200px;
+}
+
+.loginhead{
+    font-weight:bold;
+    font-size: 50px;
+}
+
+
+#input{
+    width: 300px;
+    height: 25px;
+    border-radius: 10px solid ;
+    margin : 10px;
+    background-color: white;
+    border:1px solid #B38B59;
+}
+
+#btn{
+    text-align: center;
+    height: 40px;
+    width: 133px;
+    margin: 20px;
+    border: 0px solid;
+    border-radius:5px;
+}
+
+.btnsignup{
+    background-color:#113E21;
+    color: white;
+}
+
+.btnlogin {
+    background-color: #B38B59;
+    color: white;
+}
