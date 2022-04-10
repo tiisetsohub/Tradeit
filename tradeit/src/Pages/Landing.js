@@ -4,6 +4,7 @@ import { db } from '../firebase-config';
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './Home.css';
+let cartitems = []
 
 
 export default function Landing(){
@@ -23,12 +24,6 @@ export default function Landing(){
     }, []);
 
     function ProductView(item) {
-        const scrollUp = () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            })
-        }
         setShow(true)
         setText(
             <div>
@@ -39,7 +34,7 @@ export default function Landing(){
                 <p>{item.Price}</p>
                 <div>
                     <input type="number" className="edtnum" placeholder="1" min='0' max={item.Quantity} />
-                    <button className="btnadd">Add to cart</button>
+                    <button className="btnadd" onClick={cartitems.push(item)}>Add to cart</button>
                 </div>
             </div>
         )
@@ -73,34 +68,80 @@ export default function Landing(){
 
 
 function Navbar() {
+    const [quant, setQuant] = useState(0);
+    const [total, setTotal] = useState(0);
     const [showLinks, setShowLinks] = useState(false);
-    return (
-        <div className="navbar">
-            <div className="leftside">
-                <div className="links" id={showLinks ? "hidden" : ""}>
-                    <Link className="navlink" to='/sell'>
-                        <p>Sell</p>
-                    </Link>
-                    <Link className="navlink" to='/login'>
-                        <p>About</p>
-                    </Link>
-                    <Link className="navlink" to='/login'>
-                        <p>Contact</p>
-                    </Link>
-                    <Link className="navlink" to='/login'>
-                        <p>Cart</p>
-                    </Link>
+    const [showcart, setShowCart] = useState(false);
+    const [summary, setSummary] = useState("yo")
+    let t = 0
+
+    function CartView() {
+        setShowCart(!showcart)
+
+        setSummary(
+            cartitems.map(function (currentValue, index, array) {
+                return <div className="cartitemdiv">
+                    <div className="cartleft">
+                        <img src={currentValue.Image} className="pic" />
+                    </div>
+                    <div className="cartright">
+                        <h6 className="cartid">{currentValue.Name}</h6>
+                    </div>
+
                 </div>
-                <button onClick={() => setShowLinks(!showLinks)} className="btnthings">
-                    ≡
-                </button>
+            })
+        )
+
+        for (let i = 0; i < cartitems.length; i++) {
+            const element = cartitems[i];
+            t += element.Price
+
+        }
+        t = t.toFixed(2)
+        setTotal(t)
+
+    }
+    return (
+        <div>
+            <div className="navbar">
+                <div className="leftside">
+                    <div className="links" id={showLinks ? "hidden" : ""}>
+                        <Link className="navlink" to='/sell'>
+                            <p>Sell</p>
+                        </Link>
+                        <Link className="navlink" to='/login'>
+                            <p>About</p>
+                        </Link>
+                        <Link className="navlink" to='/login'>
+                            <p>Contact</p>
+                        </Link>
+                        <Link className="navlink" onClick={() => {
+                            CartView()
+                        }}>
+                            <p>Cart</p>
+                        </Link>
+                    </div>
+                    <button onClick={() => setShowLinks(!showLinks)} className="btnthings">
+                        ≡
+                    </button>
+                </div>
+                <div className="rightside">
+                    <input className="edtsearch" placeholder="Search" />
+                    <button className="btnsearch">
+                        Search
+                    </button>
+                </div>
+
             </div>
-            <div className="rightside">
-                <input className="edtsearch" placeholder="Search" />
-                <button className="btnsearch">
-                    Search
-                </button>
-            </div>
+            {
+                showcart ? <div className="cartdiv">
+                    {summary}
+                    <div className="demodiv">
+                        <text className='textin'>R{total}</text>
+                        <button className='buttonin'>Check out</button>
+                    </div>
+                </div> : null
+            }
         </div>
     )
 }

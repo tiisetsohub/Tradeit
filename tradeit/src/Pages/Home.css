@@ -192,3 +192,53 @@ body{
         align-items: center;
     }
 }
+
+.cartitemdiv{
+    background-color: #F0F0F0;
+    display: flex;
+    justify-content:space-between;
+    border:1px solid #B38B59;
+}
+
+.pic{
+    margin : 10px;
+    height: 80px;
+    border : 1px solid #B38B59;
+    width: 80px
+    
+}
+
+.cartright{
+    padding-right: 30px;
+    justify-content:right;
+}
+
+.cartleft {
+    padding-left: 30px;
+}
+
+h6{
+    color: #113E21;
+}
+
+
+.demodiv{
+    background-color: #113E21;
+    text-align:right;
+}
+
+.textin{
+    margin: 10px;
+    color:#FEFEFE;
+    font-size:12px;
+    margin-right: 10px;
+}
+
+.buttonin{
+    margin: 10px;
+    height: 28px;
+    border-radius: 3px;
+    background-color: #B38B59;
+    border: 0px solid;
+    color: white;
+}
