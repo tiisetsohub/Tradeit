@@ -4,7 +4,9 @@ import { db } from '../firebase-config';
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './Home.css';
-export default function Sellers(){
+
+
+export default function Landing(){
 
     const [show, setShow] = useState(false);
     const [text, setText] = useState("hey");
@@ -76,6 +78,9 @@ function Navbar() {
         <div className="navbar">
             <div className="leftside">
                 <div className="links" id={showLinks ? "hidden" : ""}>
+                    <Link className="navlink" to='/sell'>
+                        <p>Sell</p>
+                    </Link>
                     <Link className="navlink" to='/login'>
                         <p>About</p>
                     </Link>

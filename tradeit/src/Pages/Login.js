@@ -1,7 +1,7 @@
 import React from 'react';
 import { loginmethod } from '../firebase-config';
 import { useState, useEffect, useRef } from 'react';
-import Sellers from './Sellers'
+import Landing from './Landing'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 import './Login.css';
 let move = false;

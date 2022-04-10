@@ -2,7 +2,8 @@ import './App.css';
 import Home from './Pages/Home'
 import Login from './Pages/Login'
 import Signup from './Pages/Signup'
-import Sellers from './Pages/Sellers'
+import Landing from './Pages/Landing'
+import Sell from './Pages/Sell'
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 function App() {
@@ -22,8 +23,14 @@ function App() {
         </Route>
 
         <Route path="/landing">
-          <Sellers />
+          <Landing />
         </Route>
+
+        <Route path="/sell">
+          <Sell />
+        </Route>
+
+
       </Switch>
     </Router>
   );

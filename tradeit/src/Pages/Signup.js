@@ -10,7 +10,6 @@ let move = false;
 
 export default function Signup() {
   const [newName, setNewName] = useState("");
-  const [newSeller, setNewSeller] = useState(false);
   const [newEmail, setNewEmail] = useState("");
   const [newCell, setNewCell] = useState("");
   const [users, setUsers] = useState([]);
@@ -24,7 +23,7 @@ export default function Signup() {
     setLoading(true);
     try {
       await signupmethod(emailRef.current.value, passwordRef.current.value);
-      await addDoc(userRef, { Name: newName, Seller : newSeller, Email: newEmail, Cell: newCell });
+      await addDoc(userRef, { Name: newName, Email: newEmail, Cell: newCell });
       move = true;
     } catch {
       alert('Error!')
@@ -64,11 +63,6 @@ export default function Signup() {
         }}/>
         <br />
         <input ref={passwordRef} type="password" className="edtpassword" id="input" placeholder="Password" />
-        <br />
-        <text className = "txt">Check if you'd like to register as a seller </text>
-        <input className="chbsell" type="checkbox" placeholder="Seller" onChange={(event) => {
-          setNewSeller(!newSeller)
-        }}/>
         <br />
         <button disabled={loading} className="btnlogin" id="btn" onClick={handleSignup}>Sign up</button>
       </div>
