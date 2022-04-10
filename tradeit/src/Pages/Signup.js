@@ -3,8 +3,10 @@ import { signupmethod } from '../firebase-config'
 import { db } from '../firebase-config'
 import { collection, getDocs, addDoc } from "firebase/firestore"
 import { useState, useEffect, useRef } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link,Redirect } from 'react-router-dom';
 import './Login.css';
+let move = false;
+
 
 export default function Signup() {
   const [newName, setNewName] = useState("");
@@ -23,11 +25,12 @@ export default function Signup() {
     try {
       await signupmethod(emailRef.current.value, passwordRef.current.value);
       await addDoc(userRef, { Name: newName, Seller : newSeller, Email: newEmail, Cell: newCell });
+      move = true;
     } catch {
       alert('Error!')
     }
     setLoading(false);
-
+    return move;
   }
 
   useEffect(() => {
@@ -41,6 +44,10 @@ export default function Signup() {
 
   return (
     <div className="bigdiv">
+      {
+        move ? <Redirect to='/landing' />
+          : null
+      }
       <Navbar />
       <h1>Sign up</h1>
       <div className='logindiv'>
