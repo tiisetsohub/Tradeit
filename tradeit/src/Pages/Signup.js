@@ -1,10 +1,19 @@
 import React from 'react'
 import { signupmethod } from '../firebase-config'
+import { db } from '../firebase-config'
+import { collection, getDocs, addDoc } from "firebase/firestore"
 import { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './Login.css';
 
 export default function Signup() {
+  const [newName, setNewName] = useState("");
+  const [newSeller, setNewSeller] = useState(false);
+  const [newEmail, setNewEmail] = useState("");
+  const [newCell, setNewCell] = useState("");
+  const [users, setUsers] = useState([]);
+  const userRef = collection(db, "Users");
+
   const [loading, setLoading] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -13,18 +22,46 @@ export default function Signup() {
     setLoading(true);
     try {
       await signupmethod(emailRef.current.value, passwordRef.current.value);
+      await addDoc(userRef, { Name: newName, Seller : newSeller, Email: newEmail, Cell: newCell });
     } catch {
       alert('Error!')
     }
     setLoading(false);
+
   }
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(userRef);
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    }
+
+    getUsers()
+  }, []);
+
   return (
-    <div>
+    <div className="bigdiv">
       <Navbar />
+      <h1>Sign up</h1>
       <div className='logindiv'>
-        <input ref ={emailRef} className="edtemail" id="input" />
+        <input className="edtname" id="input" placeholder="Name" onChange={(event) => {
+          setNewName(event.target.value)
+        }}/>
         <br />
-        <input ref={passwordRef} type="password" className="edtpassword" id="input" />
+        <input className="edtcell" id="input" placeholder="Cell" onChange={(event) => {
+          setNewCell(event.target.value)
+        }}/>
+        <br />
+        <input ref={emailRef} className="edtemail" id="input" placeholder="Email" onChange={(event) => {
+          setNewEmail(event.target.value)
+        }}/>
+        <br />
+        <input ref={passwordRef} type="password" className="edtpassword" id="input" placeholder="Password" />
+        <br />
+        <text className = "txt">Check if you'd like to register as a seller </text>
+        <input className="chbsell" type="checkbox" placeholder="Seller" onChange={(event) => {
+          setNewSeller(!newSeller)
+        }}/>
         <br />
         <button disabled={loading} className="btnlogin" id="btn" onClick={handleSignup}>Sign up</button>
       </div>

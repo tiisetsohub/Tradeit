@@ -37,3 +37,20 @@
     background-color: #B38B59;
     color: white;
 }
+
+.bigdiv{
+    align-items: center;
+    text-align: center;
+}
+
+h1{
+    color :#113E21;
+
+}
+
+text{
+    font-family:Inter;
+    font-size: 10px;
+    color: #113E21;
+}
+
