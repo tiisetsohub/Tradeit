@@ -241,4 +241,10 @@ h6{
     background-color: #B38B59;
     border: 0px solid;
     color: white;
+    margin-right: 25px;
+}
+
+.cartpricep{
+    font-size: 8px;
+    
 }
