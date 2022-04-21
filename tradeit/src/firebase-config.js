@@ -18,10 +18,10 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth();
 
-export function signupmethod(email, password) {
+export function signupmethod(email, password) {         //function used to sign up new user on database
     return createUserWithEmailAndPassword(auth, email, password)
 }
-export function loginmethod(email, password) {
+export function loginmethod(email, password) {              //function used to login an exiting user on database
     return signInWithEmailAndPassword(auth, email, password)
 }
 

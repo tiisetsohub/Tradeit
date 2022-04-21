@@ -1,34 +1,36 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from 'react';
 import { db } from '../firebase-config';
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './Home.css';
+import { CartContext } from '../Context';
 
 export default function Home() {
-    const [cartitems, setCartItems] = useState([{}])
-    const [show, setShow] = useState(false);
-    const [text, setText] = useState("");
-    const [Inventory, setItems] = useState([]);
-    const itemRef = collection(db, "Inventory");
+    const [cartitems, setCartItems] = useState([])      //state for local cart array
+    const [show, setShow] = useState(false);            //state for showing cart
+    const [text, setText] = useState("");                //state for product text
+    const [Inventory, setItems] = useState([]);           //state for inventory
+    const itemRef = collection(db, "Inventory");            //reference to inventory in database
+    const { cart, setCart } = useContext(CartContext);          //context for global cart
     
 
 
 
-    function Navbar() {
-        const [quant, setQuant] = useState(0);
-        const [total, setTotal] = useState(0);
-        const [showLinks, setShowLinks] = useState(false);
-        const [showcart, setShowCart] = useState(false);
-        const [summary, setSummary] = useState("")
-        let t = 0
+    function Navbar() {         //function for navbar component
+        const [quant, setQuant] = useState(0);      //to be used
+        const [total, setTotal] = useState(0);         //state for cart total
+        const [showLinks, setShowLinks] = useState(false);          //state for showing links
+        const [showcart, setShowCart] = useState(false);            //state for showing cart
+        const [summary, setSummary] = useState("")              //state for cart summary
+        let t = 0           //total = 0
 
-        function CartView() {
-            setShowCart(!showcart)
+        function CartView() {       //function to display the cart
+            setShowCart(!showcart)          //changes show cart state
 
-            setSummary(
+            setSummary(         //set summary to all items in cart array
                 cartitems.map(function (currentValue, index, array) {
-                    return index > 0 ? <div className="cartitemdiv">
+                    return index >= 0 ? <div className="cartitemdiv">
                         <div className="cartleft">
                             <img src={currentValue.Image} className="pic" />
                         </div>
@@ -40,14 +42,14 @@ export default function Home() {
                 })
             )
 
-            for (let i = 1; i < cartitems.length; i++) {
+            for (let i = 0; i < cartitems.length; i++) {            //set total price
                 const element = cartitems[i];
                 t += element.Price
 
             }
             t = t.toFixed(2)
 
-            setTotal(t)
+            setTotal(t)     //changes total state to total price
 
         }
 
@@ -100,7 +102,7 @@ export default function Home() {
 
 
 
-    useEffect(() => {
+    useEffect(() => {       //loads data from database
         const getItems = async () => {
             const data = await getDocs(itemRef);
             setItems(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -109,15 +111,20 @@ export default function Home() {
         getItems()
     }, []);
 
-    function handleCartItems(item) {
+    function handleCartItems(item) {        //handles adding an item to the cart
         alert('Item added to cart')
         setCartItems(prev => {
             return cartitems.includes(item) ? prev : [...prev, item];
         })
     }
 
+    useEffect(() => {           //updates the global cart to match the local cart
+        setCart(cartitems)
+    }, [cartitems])
 
-    function ProductView(item) {     
+
+
+    function ProductView(item) {     //handles the viewing of a product in isolation
         setShow(true)
         setText(
             <div>
@@ -142,7 +149,7 @@ export default function Home() {
             
             {
                 show ? <div className="reviewdiv">
-                    {text}
+                    {text}      {/*ternary to show cart*/}
                 </div> : 
                     <div className="bodydiv" >
                         {Inventory.map((item) => {

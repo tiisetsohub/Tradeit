@@ -211,6 +211,7 @@ body{
 .cartright{
     padding-right: 30px;
     justify-content:right;
+    text-align: right;
 }
 
 .cartleft {

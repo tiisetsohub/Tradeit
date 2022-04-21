@@ -1,23 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { loginmethod } from '../firebase-config';
 import { useState, useEffect, useRef } from 'react';
-import Landing from './Landing'
+import { NameContext, LoginContext } from '../Context'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 import './Login.css';
 let move = false;
+// similar structure to signup.js
 
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
+  const { name, setName } = useContext(NameContext)
+  const { login, setLogin } = useContext(LoginContext)
   
-  
-  async function handleLogin() {
+  async function handleLogin() {      //function that handles login
     console.log(move)
     setLoading(true);
     try {
       await loginmethod(emailRef.current.value, passwordRef.current.value);
+      setName(emailRef.current.value);
+      setLogin(true);
       move = true;
     } catch {
       alert('Error!')
@@ -36,12 +40,12 @@ export default function Login() {
   return (
     <div className="bigdiv">
       {
-        move ? <Redirect to='/landing' />
+        move ? <Redirect to='/landing' /> // redirect to landing page when logged in
         : null
       }
       <Navbar />
       <h1>Login</h1>
-      <div className='logindiv'>
+      <div className='logindiv'>      {/*form containing all inputs for user*/}
         <input className="edtemail" id ="input" ref = {emailRef} placeholder="Email"/>
         <br />
         <input type="password" className="edtpassword" id="input" ref={passwordRef} placeholder="Password"/>
@@ -57,7 +61,7 @@ export default function Login() {
   )
 }
 
-function Navbar() {
+function Navbar() {       //function for navbar component
   const [showLinks, setShowLinks] = useState(false);
   return (
     <div className="navbar">
@@ -66,7 +70,7 @@ function Navbar() {
           <Link className="navlink" to='/'>
             <p>Home</p>
           </Link>
-          <Link className="navlink" to='/login'>
+          <Link className="navlink" to='/about'>
             <p>About</p>
           </Link>
           <Link className="navlink" to='/login'>

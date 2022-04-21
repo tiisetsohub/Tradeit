@@ -1,12 +1,20 @@
 import React, { useContext } from 'react';
-import { NameContext, LoginContext } from '../Context'
+import { NameContext, LoginContext, CartContext } from '../Context'
+//ignore page
 
 export default function About(){
     const { name, setName } = useContext(NameContext)
-    const {login, setLogin} = useContext(LoginContext)
+    const { login, setLogin} = useContext(LoginContext)
+    const { cart, setCart } = useContext(CartContext)
+    
     return (
         <div>
-            {login ? <h1>hi there {name}</h1> : <h1>Get outta here brah</h1>}
+            {login ? 
+            <div>
+                <h1>hi there </h1>
+                <h1>{cart[0].Name}</h1>
+            </div> 
+            : <h1>Get outta here brah</h1>}
             <button onClick={()=>setLogin(!login)}>click me</button>
         </div>
     )

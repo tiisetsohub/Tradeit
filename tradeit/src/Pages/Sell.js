@@ -6,21 +6,21 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './Login.css';
 
 export default function Sell(){
-    const [newName, setNewName] = useState("");
-    const [newDescription, setNewDesnewDescription] = useState("");
-    const [newImg, setnewImg] = useState("");
-    const [newPrice, setNewPrice] = useState(0);
-    const [newQuantity, setNewQuantity] = useState(0);
+    const [newName, setNewName] = useState("");     //state for item name
+    const [newDescription, setNewDesnewDescription] = useState("");         //state for description 
+    const [newImg, setnewImg] = useState("");                   //state for image
+    const [newPrice, setNewPrice] = useState(0);                    //state for price
+    const [newQuantity, setNewQuantity] = useState(0);              //state for quantity
 
-    const [item, setItem] = useState([]);
-    const itemRef = collection(db, "Inventory");
+    const [item, setItem] = useState([]);           //state for item
+    const itemRef = collection(db, "Inventory");            //refernce for item
 
-    const addItem = async () => {
+    const addItem = async () => {           //handles adding an item to database
         await addDoc(itemRef, { Name: newName, Description: newDescription, Price: newPrice, Quantity: newQuantity, Image: newImg});
         alert("Added")
     }
 
-    useEffect(() => {
+    useEffect(() => {           //gets data from database
         const getItems = async () => {
             const data = await getDocs(itemRef);
             setItem(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -34,7 +34,7 @@ export default function Sell(){
         <div className="bigdiv">
             <Navbar />
             <h1>Add Item</h1>
-            <div className='logindiv'>
+            <div className='logindiv'>          {/*form for item information*/}
                 <input className="edtname" id="input" placeholder="Name" onChange={(event) => {
                     setNewName(event.target.value)
                 }} />

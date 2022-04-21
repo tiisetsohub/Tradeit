@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState, useEffect } from 'react';
 import { db } from '../firebase-config';
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './Home.css';
+import { CartContext } from '../Context'
 
+//identical to home.js
 
 
 export default function Landing(){
-    const [cartitems, setCartItems] = useState([{}])
+    const [cartitems, setCartItems] = useState([])
     const [show, setShow] = useState(false);
     const [text, setText] = useState("hey");
     const [Inventory, setItems] = useState([]);
     const itemRef = collection(db, "Inventory");
+    const { cart, setCart } = useContext(CartContext)
 
+    
     function Navbar() {
         const [total, setTotal] = useState(0);
         const [showLinks, setShowLinks] = useState(false);
@@ -26,7 +30,7 @@ export default function Landing(){
             setShowCart(!showcart)
             setSummary(
                 cartitems.map(function (currentValue, index, array) {
-                    return index > 0 ? <div className="cartitemdiv">
+                    return index >= 0 ? <div className="cartitemdiv">
                         <div className="cartleft">
                             <img src={currentValue.Image} className="pic" />
                         </div>
@@ -38,7 +42,7 @@ export default function Landing(){
                 })
             )
 
-            for (let i = 1; i < cartitems.length; i++) {
+            for (let i = 0; i < cartitems.length; i++) {
                 const element = cartitems[i];
                 t+=element.Price
                 
@@ -56,7 +60,7 @@ export default function Landing(){
                             <Link className="navlink" to='/sell'>
                                 <p>Sell</p>
                             </Link>
-                            <Link className="navlink" to='/login'>
+                            <Link className="navlink" to='/about'>
                                 <p>About</p>
                             </Link>
                             <Link className="navlink" to='/login'>
@@ -107,7 +111,14 @@ export default function Landing(){
         setCartItems(prev => {
             return cartitems.includes(item) ? prev : [...prev, item];
         })
+        
+        alert('Item added to cart');
+        
     }
+
+    useEffect(() => {
+        setCart(cartitems)
+    },[cartitems])
 
 
     function ProductView(item) {
@@ -159,5 +170,3 @@ export default function Landing(){
     );
 
 }
-
-

@@ -1,3 +1,4 @@
+//All pages imported to this folder
 import './App.css';
 import Home from './Pages/Home'
 import Login from './Pages/Login'
@@ -6,48 +7,52 @@ import Landing from './Pages/Landing'
 import Sell from './Pages/Sell'
 import About from './Pages/About'
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import { NameContext, LoginContext } from './Context'
+import { NameContext, LoginContext, CartContext } from './Context'      //imports all global contexts in here where they will be initialized
 import { useState } from 'react'
 
 function App() {
   
-  const [name, setName] = useState("tiisetso")
+  const [name, setName] = useState("")    //global context for name of client
 
-  const [login, setLogin] = useState(false)
+  const [login, setLogin] = useState(false)   //global context for knowing if someone is logged in
+
+  const [cart, setCart] = useState("")      //global context for a persons cart
   return (
-    <LoginContext.Provider value ={{login,setLogin}}>
-      <NameContext.Provider value={{ name, setName }} >
-        <Router>
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
+    <CartContext.Provider value={{ cart, setCart }}>      {/*provider for global cart*/}
+      <LoginContext.Provider value={{ login, setLogin }}>   {/*provider for global login checker*/}
+        <NameContext.Provider value={{ name, setName }} >   {/*provider for global name*/}
+          <Router>                       {/*stores all the routes to all pages*/}
+            <Switch>                      {/*allows for different routes*/}
+              <Route exact path="/">        {/*route to home page*/}
+                <Home />
+              </Route>
 
-            <Route path="/login">
-              <Login />
-            </Route>
+              <Route path="/login">             {/*route to login page*/}
+                <Login />
+              </Route>
 
-            <Route path="/signup">
-              <Signup />
-            </Route>
+              <Route path="/signup">              {/*route to signup page*/}
+                <Signup />
+              </Route>
 
-            <Route path="/landing">
-              <Landing />
-            </Route>
+              <Route path="/landing">                 {/*route to landing page*/}
+                <Landing />
+              </Route>
 
-            <Route path="/sell">
-              <Sell />
-            </Route>
+              <Route path="/sell">                  {/*route to sell page*/}
+                <Sell />
+              </Route>
 
-            <Route path="/about">
-              <About />
-            </Route>
+              <Route path="/about">                 {/*route to about page*/}
+                <About />
+              </Route>
 
-          </Switch>
-        </Router>
+            </Switch>
+          </Router>
 
-      </NameContext.Provider>
-    </LoginContext.Provider>
+        </NameContext.Provider>
+      </LoginContext.Provider>
+    </CartContext.Provider>
   );
 }
 
